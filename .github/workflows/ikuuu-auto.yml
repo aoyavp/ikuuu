@@ -12,6 +12,8 @@ jobs:
   checkin_job:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+      actions: write
+      contents: read
 
     steps:
       # 📥 拉私有仓库
