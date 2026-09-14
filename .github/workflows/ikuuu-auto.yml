@@ -51,3 +51,11 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           xvfb-run -a python ikuuu.py
+          
+# 新增：保活步骤，防止 60 天无活动导致 schedule 被自动禁用
+      - name: Keepalive Workflow
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api -X PUT /repos/${{ github.repository }}/actions/workflows/${{ github.workflow }}/enable || true
