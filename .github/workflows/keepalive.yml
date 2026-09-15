@@ -1,0 +1,17 @@
+name: Keep GitHub Actions Alive
+
+on:
+  schedule:
+    # 每 30 天的午夜 0 点触发一次（远小于 60 天的限制）
+    - cron: '0 0 1/30 * *'
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # 必须赋予写权限，以便能够提交代码
+    steps:
+      - uses: actions/checkout@v4
+      - name: Keepalive Workflow
+        uses: gautamkrishnar/keepalive-workflow@v2 # 开源保活组件
