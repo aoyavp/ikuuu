@@ -52,11 +52,3 @@ jobs:
         run: |
           xvfb-run -a python ikuuu.py
           
-# 新增的保活任务
-  keepalive-job:
-    name: Keepalive Workflow
-    runs-on: ubuntu-latest
-    permissions:
-      actions: write   # 这是必须的，允许 API 调用
-    steps:
-      - uses: gautamkrishnar/keepalive-workflow@v2
