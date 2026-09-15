@@ -12,8 +12,6 @@ jobs:
   checkin_job:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-      actions: write
-      contents: read
 
     steps:
       # 📥 拉私有仓库
@@ -54,9 +52,11 @@ jobs:
         run: |
           xvfb-run -a python ikuuu.py
           
-# 新增：保活步骤，防止 60 天无活动导致 schedule 被自动禁用
-      - name: Keepalive Workflow
-        if: always()
-        uses: gautamkrishnar/keepalive-workflow@v2
-        with:
-          gh_token: ${{ github.token }}
+# 新增的保活任务
+  keepalive-job:
+    name: Keepalive Workflow
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write   # 这是必须的，允许 API 调用
+    steps:
+      - uses: gautamkrishnar/keepalive-workflow@v2
